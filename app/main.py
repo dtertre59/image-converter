@@ -1,7 +1,10 @@
 
 from PIL import Image
+from PyPDF2 import PdfFileReader
 # import BytesIO
 
+
+# ----- PIL Image ----- # 
 
 def image(path: str) -> Image.Image:
     img = Image.open(path)
@@ -20,9 +23,21 @@ def i_resize(img: Image.Image, new_weight: int, verbose: bool = False) -> Image.
     img_resized = img.resize((new_weight, new_height))
     return img_resized
 
-
 def i_save(img: Image.Image, path: str):
     img.save(path)
+
+
+# ----- pypdf2 ----- # 
+def obtain_first_page(path: str):
+    with open(path, "rb") as pdf_file:
+        pdf_reader = PdfFileReader(pdf_file)
+        pag_1 = pdf_reader.getPage(0)
+    return pag_1
+
+
+
+
+
 
 def pdf2png(path: str):
     pass
@@ -37,7 +52,7 @@ def main():
     img = image(path)
     img2 = i_resize(img, 465, verbose= True)
     i_size(img2, verbose=True)
-    i_save(img2, './app/assets/userInfo2.png')
+    i_save(img2, './app/assets/userInfo2.jpg')
 
 
 
